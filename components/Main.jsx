@@ -1,74 +1,76 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import InfoBar from './InfoBar';
+import SearchBar from './SearchBar';
+import WeatherHero from './WeatherHero';
+
 const api = {
-  key: "17de6ed997e33ccb85d03acf1d7eeb02",
+  key: process.env.NEXT_PUBLIC_PRIVATE_API_KEY,
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
 const Main = () => {
 
+  const [savedQuery, setSavedQuery] = useState('');
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
+
+  useEffect(() => {
+    fetch(`${api.base}weather?q=brunei&units=metric&APPID=${api.key}`)
+      .then(res => res.json())
+      .then(result => {
+        setWeather(result);
+        }
+      );
+  }, []);
 
   const search = evt => {
     if (evt.key === "Enter") {
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(res => res.json())
         .then(result => {
+          if (typeof result != "undefined") {
+            setSavedQuery(query)
+          }
           setWeather(result);
           setQuery('');
-          console.log(result);
           }
         );
     }
   }
 
   const dateBuilder = (d) => {
-    let months = [
-      "January", "February", "March", "April", "May", "June", "July", 
-      "August", "September", "October", "November", "December"
-    ]
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let date = d.toDateString() 
 
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
-
-    return `${day} ${date} ${month} ${year}`
+    return date
   }
 
   return (
-    <div className="w-full h-screen bg-[url('../public/assets/cold-bg.jpg')] bg-cover bg-bottom">
-      <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          onChange={e => setQuery(e.target.value)}
-          value={query}
-          onKeyDown={search}
-        />
-      </div>
+    <div className="w-full h-screen bg-[url('../public/assets/sunny.jpg')] bg-cover bg-bottom">
+        <div className='w-full h-full bg-gradient-to-t from-[#111111] pb-14'>
+          <div className='max-w-[85%] h-full m-auto flex flex-col justify-between'>
+            {(typeof weather.main != "undefined") 
+            ? (
+            <WeatherHero location={(weather.name)} temperature={(weather.main.temp)} weather={(weather.weather[0].description)}/>
+            ) 
+            : (
+            <h2 className='text-white text-2xl m-auto'>I don't know where <span className="text-red-700">{savedQuery}</span> is 😔</h2>
+            )}
 
-      {(typeof weather.main != "undefined") 
-      ? (
+          
           <div>
-          <div>
-            <div>{weather.name}, {weather.sys.country}</div>
-            <div>{dateBuilder(new Date())}</div>
+            {(typeof weather.main != "undefined")
+            ? (
+            <InfoBar humidity={(weather.main.humidity)} pressure={(weather.main.pressure)} windSpeed={(weather.wind.speed)} />
+            )
+            : (
+              <InfoBar />
+            )}
+            
+            <SearchBar setQuery={setQuery} query={query} search={search} dateBuilder={dateBuilder}></SearchBar>
           </div>
-          <div>
-            <div>
-              {Math.round(weather.main.temp*10)/10}°C
-            </div>
-            <div>
-              {weather.weather[0].main}
-            </div>
-          </div>
+          
         </div>
-        ) 
-      : ('')}
-      
-      
+      </div>
     </div>
   )
 }
