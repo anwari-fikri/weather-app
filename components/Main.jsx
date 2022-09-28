@@ -32,7 +32,8 @@ const Main = () => {
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(res => res.json())
         .then(data => {
-          if (data.weather[0].main != "undefined") {
+          console.log(data)
+          if (data.cod != "404") {
             changeBg(data.weather[0].main)
           }
           setSavedQuery(query)
@@ -78,6 +79,7 @@ const Main = () => {
     <div className={bg}>
         <div className="w-full h-full bg-gradient-to-t from-[#222222] pb-14">
           <div className="max-w-[85%] h-full m-auto flex flex-col justify-between">
+          hi
             {(typeof weather.main != "undefined") 
             ? (
             <WeatherHero location={(weather.name)} temperature={(weather.main.temp)} weather={(weather.weather[0].description)}/>
