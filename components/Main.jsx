@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { gsap } from "gsap";
 import InfoBar from "./InfoBar";
 import SearchBar from "./SearchBar";
 import WeatherHero from "./WeatherHero";
