@@ -15,6 +15,7 @@ const Main = () => {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
 
+  // Set starting weather location to brunei on page start
   useEffect(() => {
     fetch(`${api.base}weather?q=brunei&units=metric&APPID=${api.key}`)
       .then(res => res.json())
@@ -25,6 +26,7 @@ const Main = () => {
       );
   }, []);
 
+  // Fetch API everytime search button submitted
   const search = evt => {
     if (evt.key === "Enter") {
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
@@ -40,12 +42,7 @@ const Main = () => {
     }
   }
 
-  const dateBuilder = (d) => {
-    let date = d.toDateString() 
-
-    return date
-  }
-
+  // Toggle background based on weather
   const changeBg = (main) => {
     switch(main) {
       case "Thunderstorm":
@@ -69,6 +66,11 @@ const Main = () => {
       default:
         setBg("w-full h-screen bg-[url('../public/assets/default.jpg')] bg-cover bg-bottom");
     }
+  }
+
+  const dateBuilder = (d) => {
+    let date = d.toDateString()
+    return date
   }
 
 
