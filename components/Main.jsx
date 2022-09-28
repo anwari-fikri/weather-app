@@ -10,6 +10,7 @@ const api = {
 
 const Main = () => {
 
+  const [bg, setBg] = useState("w-full h-screen bg-[url('../public/assets/default.jpg')] bg-cover bg-bottom");
   const [savedQuery, setSavedQuery] = useState('');
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
@@ -17,8 +18,9 @@ const Main = () => {
   useEffect(() => {
     fetch(`${api.base}weather?q=brunei&units=metric&APPID=${api.key}`)
       .then(res => res.json())
-      .then(result => {
-        setWeather(result);
+      .then(data => {
+        setWeather(data);
+        changeBg(data.weather[0].main)
         }
       );
   }, []);
@@ -27,14 +29,14 @@ const Main = () => {
     if (evt.key === "Enter") {
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(res => res.json())
-        .then(result => {
-          if (typeof result != "undefined") {
-            setSavedQuery(query)
+        .then(data => {
+          if (data.weather[0].main != "undefined") {
+            changeBg(data.weather[0].main)
           }
-          setWeather(result);
+          setSavedQuery(query)
+          setWeather(data);
           setQuery('');
-          }
-        );
+        });
     }
   }
 
@@ -44,9 +46,35 @@ const Main = () => {
     return date
   }
 
+  const changeBg = (main) => {
+    switch(main) {
+      case "Thunderstorm":
+        setBg("w-full h-screen bg-[url('../public/assets/thunderstorm.jpg')] bg-cover bg-bottom");
+        break;
+      case "Drizzle":
+        setBg("w-full h-screen bg-[url('../public/assets/drizzle.jpg')] bg-cover bg-bottom");
+        break;
+      case "Rain":
+        setBg("w-full h-screen bg-[url('../public/assets/rain.jpg')] bg-cover bg-bottom");
+        break;
+      case "Snow":
+        setBg("w-full h-screen bg-[url('../public/assets/snow.jpg')] bg-cover bg-bottom");
+        break;
+      case "Clear":
+        setBg("w-full h-screen bg-[url('../public/assets/clear.jpg')] bg-cover bg-bottom");
+        break;
+      case "Clouds":
+        setBg("w-full h-screen bg-[url('../public/assets/clouds.jpg')] bg-cover bg-bottom");
+        break;
+      default:
+        setBg("w-full h-screen bg-[url('../public/assets/default.jpg')] bg-cover bg-bottom");
+    }
+  }
+
+
   return (
-    <div className="w-full h-screen bg-[url('../public/assets/sunny.jpg')] bg-cover bg-bottom">
-        <div className='w-full h-full bg-gradient-to-t from-[#111111] pb-14'>
+    <div className={bg}>
+        <div className='w-full h-full bg-gradient-to-t from-[#222222] pb-14'>
           <div className='max-w-[85%] h-full m-auto flex flex-col justify-between'>
             {(typeof weather.main != "undefined") 
             ? (
