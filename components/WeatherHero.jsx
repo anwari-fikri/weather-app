@@ -5,7 +5,7 @@ const WeatherHero = ({location, temperature, weather}) => {
     <div className='md: m-auto'>
       <h2 className='text-white text-2xl font-medium md:text-4xl'>{location}</h2>
       <div>
-        <h1 className='text-white text-9xl font-medium lg:text-[256px] md:text-[192px]'>
+        <h1 className='text-white text-9xl font-medium lg:text-[200px] md:text-[150px]'>
           {Math.round(temperature)}°
         </h1>
         <h3 className='text-white text-lg font-light md:text-xl'>
