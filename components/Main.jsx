@@ -46,25 +46,25 @@ const Main = () => {
   const changeBg = (main) => {
     switch(main) {
       case "Thunderstorm":
-        setBg(`w-full h-screen bg-[url("../public/assets/thunderstorm.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/thunderstorm.jpg")] bg-cover bg-bottom`);
         break;
       case "Drizzle":
-        setBg(`w-full h-screen bg-[url("../public/assets/drizzle.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/drizzle.jpg")] bg-cover bg-bottom`);
         break;
       case "Rain":
-        setBg(`w-full h-screen bg-[url("../public/assets/rain.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/rain.jpg")] bg-cover bg-bottom`);
         break;
       case "Snow":
-        setBg(`w-full h-screen bg-[url("../public/assets/snow.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/snow.jpg")] bg-cover bg-bottom`);
         break;
       case "Clear":
-        setBg(`w-full h-screen bg-[url("../public/assets/clear.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/clear.jpg")] bg-cover bg-bottom`);
         break;
       case "Clouds":
-        setBg(`w-full h-screen bg-[url("../public/assets/clouds.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/clouds.jpg")] bg-cover bg-bottom`);
         break;
       default:
-        setBg(`w-full h-screen bg-[url("../public/assets/default.jpg")] bg-cover bg-bottom`);
+        setBg(`w-full h-screen bg-[url("/assets/default.jpg")] bg-cover bg-bottom`);
     }
   }
 
