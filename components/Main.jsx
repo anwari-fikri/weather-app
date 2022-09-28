@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import InfoBar from './InfoBar';
-import SearchBar from './SearchBar';
-import WeatherHero from './WeatherHero';
+import React, { useEffect, useState } from "react"
+import { gsap } from "gsap";
+import InfoBar from "./InfoBar";
+import SearchBar from "./SearchBar";
+import WeatherHero from "./WeatherHero";
 
 const api = {
   key: process.env.NEXT_PUBLIC_PRIVATE_API_KEY,
@@ -10,9 +11,9 @@ const api = {
 
 const Main = () => {
 
-  const [bg, setBg] = useState("w-full h-screen bg-[url('../public/assets/default.jpg')] bg-cover bg-bottom");
-  const [savedQuery, setSavedQuery] = useState('');
-  const [query, setQuery] = useState('');
+  const [bg, setBg] = useState(`w-full h-screen bg-[url("../public/assets/default.jpg")] bg-cover bg-bottom`);
+  const [savedQuery, setSavedQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
 
   // Set starting weather location to brunei on page start
@@ -37,7 +38,7 @@ const Main = () => {
           }
           setSavedQuery(query)
           setWeather(data);
-          setQuery('');
+          setQuery("");
         });
     }
   }
@@ -46,25 +47,25 @@ const Main = () => {
   const changeBg = (main) => {
     switch(main) {
       case "Thunderstorm":
-        setBg("w-full h-screen bg-[url('../public/assets/thunderstorm.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/thunderstorm.jpg")] bg-cover bg-bottom`);
         break;
       case "Drizzle":
-        setBg("w-full h-screen bg-[url('../public/assets/drizzle.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/drizzle.jpg")] bg-cover bg-bottom`);
         break;
       case "Rain":
-        setBg("w-full h-screen bg-[url('../public/assets/rain.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/rain.jpg")] bg-cover bg-bottom`);
         break;
       case "Snow":
-        setBg("w-full h-screen bg-[url('../public/assets/snow.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/snow.jpg")] bg-cover bg-bottom`);
         break;
       case "Clear":
-        setBg("w-full h-screen bg-[url('../public/assets/clear.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/clear.jpg")] bg-cover bg-bottom`);
         break;
       case "Clouds":
-        setBg("w-full h-screen bg-[url('../public/assets/clouds.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/clouds.jpg")] bg-cover bg-bottom`);
         break;
       default:
-        setBg("w-full h-screen bg-[url('../public/assets/default.jpg')] bg-cover bg-bottom");
+        setBg(`w-full h-screen bg-[url("../public/assets/default.jpg")] bg-cover bg-bottom`);
     }
   }
 
@@ -76,14 +77,14 @@ const Main = () => {
 
   return (
     <div className={bg}>
-        <div className='w-full h-full bg-gradient-to-t from-[#222222] pb-14'>
-          <div className='max-w-[85%] h-full m-auto flex flex-col justify-between'>
+        <div className="w-full h-full bg-gradient-to-t from-[#222222] pb-14">
+          <div className="max-w-[85%] h-full m-auto flex flex-col justify-between">
             {(typeof weather.main != "undefined") 
             ? (
             <WeatherHero location={(weather.name)} temperature={(weather.main.temp)} weather={(weather.weather[0].description)}/>
             ) 
             : (
-            <h2 className='text-white text-2xl m-auto'>I don't know where <span className="text-red-700">{savedQuery}</span> is 😔</h2>
+            <h2 className="text-white text-2xl m-auto">I don`t know where <span className="text-red-700">{savedQuery}</span> is 😔</h2>
             )}
 
           
